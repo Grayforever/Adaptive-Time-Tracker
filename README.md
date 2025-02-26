@@ -28,3 +28,5 @@ A modern web-based time tracking application similar to Clockify, built with the
 ```bash
 git clone https://github.com/Grayforever/adaptive-time-tracker.git
 cd adaptive-time-tracker
+
+This is Philemon Gyamfi
