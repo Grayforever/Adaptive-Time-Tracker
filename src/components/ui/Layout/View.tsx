@@ -1,12 +1,12 @@
-import Admin from "@/screens/Admin";
-import Dashboard from "@/screens/Dashboard";
+import Dashboard from "@/Pages/Dashboard";
+import SignIn from "@/Pages/SignIn";
 import { Route, Routes } from "react-router-dom";
 
 export const View = () => {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/admin" element={<Admin />} />
+      <Route path="/" element={< SignIn/>} />
+      <Route path="/home" element={< Dashboard/>} />
     </Routes>
   );
 };
