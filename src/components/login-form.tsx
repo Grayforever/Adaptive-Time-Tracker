@@ -15,6 +15,11 @@ export function LoginForm({
           <form className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
+              <img
+              src="/adaptive.png"
+              alt="Image"
+              className="inset-0 h-9 object-contain mb-8 dark:brightness-[0.2] dark:grayscale"
+            />
                 <h1 className="text-2xl font-bold">Welcome back 👋</h1>
          
               </div>
