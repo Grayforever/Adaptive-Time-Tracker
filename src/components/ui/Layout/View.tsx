@@ -1,6 +1,6 @@
 import Admin from "@/screens/Admin";
 import Dashboard from "@/screens/Dashboard";
-import Timetracker from "@/screens/Timetracker";
+import Timetracker from "@/screens/AllProjects";
 
 import { Route, Routes } from "react-router-dom";
 
