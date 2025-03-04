@@ -1,15 +1,15 @@
-import  { ReactNode } from 'react'
 import { SidebarProvider } from '../sidebar'
 import AppSideBar from './AppSideBar'
+import { Outlet } from 'react-router-dom'
+import NavBar from './NavBar'
 
 
-const AppLayout = ({ children }: { children: ReactNode }) => {
+const AppLayout = () => {
   return (
          <SidebarProvider defaultOpen={true}>
             <AppSideBar />
-            {/* {showSideBar?(<AppSideBar />):''} */}
             <main className='w-full'>
-            {children}
+            <Outlet/>
             </main>
     </SidebarProvider>
   )

@@ -1,5 +1,5 @@
-import React from 'react'
 import { BiSolidTachometer } from "react-icons/bi";
+import { FileStack } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -14,14 +14,15 @@ import {
 const items =[
   {
     title: "Dashboard",
-    url: "/home",
+    url: "/dashboard",
     icon: BiSolidTachometer,
   },
   {
-    title: "reports",
-    url: "/bisom",
-    icon: BiSolidTachometer,
+    title: "All Projects",
+    url: "/dashboard/allProjects",
+    icon: FileStack,
   },
+  
   
 ]
 const AppSideBar = () => {

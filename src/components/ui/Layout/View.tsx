@@ -1,25 +1,20 @@
-<<<<<<< HEAD
-import Admin from "@/screens/Admin";
-import Dashboard from "@/screens/Dashboard";
-import Timetracker from "@/screens/AllProjects";
-
-=======
-import Dashboard from "@/Pages/Dashboard";
-import SignIn from "@/Pages/SignIn";
->>>>>>> 9624a80ca98c8cbc41e3278969c69b2e29a8058b
 import { Route, Routes } from "react-router-dom";
+import Admin from "@/Pages/Admin";
+import Dashboard from "@/Pages/Dashboard";
+import Timetracker from "@/Pages/AllProjects";
+import SignIn from "@/Pages/SignIn";
+import AppLayout from "./AppLayout";
 
 export const View = () => {
   return (
     <Routes>
-<<<<<<< HEAD
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/admin" element={<Admin />} />
-      <Route path="/timetracker" element={<Timetracker/>} />
-=======
-      <Route path="/" element={< SignIn/>} />
-      <Route path="/home" element={< Dashboard/>} />
->>>>>>> 9624a80ca98c8cbc41e3278969c69b2e29a8058b
+      <Route path="/" element={<SignIn />} />
+
+      <Route path="/dashboard" element={<AppLayout />}>
+        <Route index element={<Dashboard />} /> 
+        <Route path="admin" element={<Admin />} />
+        <Route path="allProjects" element={<Timetracker />} />
+      </Route>
     </Routes>
   );
 };
