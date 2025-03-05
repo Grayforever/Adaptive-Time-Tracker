@@ -129,7 +129,13 @@ function AllProjects() {
         ))}
       </div>
       <div>
-        {filteredProjects.length === 0 && (
+        {projects.length > 0 && filteredProjects.length === 0 && (
+          <div className="flex justify-center items-center w-full h-full">
+            No Match found
+          </div>
+        )}
+
+        {projects.length === 0 && (
           <div className="flex justify-center items-center  w-full h-full">
             <div className="flex items-center h-[12rem] p-4 mx-4 rounded-md shadow-lg  gap-5 flex-col justify-center bg-white ">
               <div>
