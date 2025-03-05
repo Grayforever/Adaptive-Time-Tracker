@@ -14,7 +14,7 @@ const priorityColors: { [key in "Normal" | "Urgent" | "High"]: string } = {
   High: "orange",
 };
 
-function Timetracker() {
+function AllProjects() {
   const { projects, setProjects } = useProject();
   const [showAddProject, setShowAddProject] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
@@ -166,4 +166,4 @@ function Timetracker() {
   );
 }
 
-export default Timetracker;
+export default AllProjects;
