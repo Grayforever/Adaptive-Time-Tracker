@@ -9,9 +9,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-}  from '../sidebar';
+} from "../sidebar";
 
-const items =[
+const items = [
   {
     title: "Dashboard",
     url: "/dashboard",
@@ -22,17 +22,13 @@ const items =[
     url: "/dashboard/allProjects",
     icon: FileStack,
   },
-  
-  
-]
+];
 const AppSideBar = () => {
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel >
-            Adaptive Time Tracker App
-          </SidebarGroupLabel>
+          <SidebarGroupLabel>Adaptive Time Tracker App</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -50,7 +46,7 @@ const AppSideBar = () => {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
-}
+  );
+};
 
-export default AppSideBar
+export default AppSideBar;

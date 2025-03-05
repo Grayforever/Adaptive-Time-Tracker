@@ -1,50 +1,45 @@
 export interface Project {
-    id:string
-    name: string,
-    assignee:string,
-    priority: 'Normal' | 'Urgent' | 'High'
-
-}
-
-
-export interface ConfirmModalProps {
-    isOpen: boolean;
-    onConfirm: () => void;
-    onCancel: () => void;
-    message: string;
+  id: string;
+  name: string;
+  assignee: string;
+  priority: "Normal" | "Urgent" | "High";
 }
 
 export interface ConfirmModalProps {
-    isOpen: boolean;
-    onConfirm: () => void;
-    onCancel: () => void;
-    message: string;
+  isOpen: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+  message: string;
+}
+
+export interface ConfirmModalProps {
+  isOpen: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+  message: string;
 }
 
 export interface EditProjectProps {
-    isOpen: boolean;
-    onUpdate: (updatedProject: Project) => void;
-    onCancel: () => void;
-    projectInitialState: Project | null;
+  isOpen: boolean;
+  onUpdate: (updatedProject: Project) => void;
+  onCancel: () => void;
+  projectInitialState: Project | null;
 }
 
-
-export 
-interface ProjectCardProps {
+export interface ProjectCardProps {
   name: string;
-  priority: string; 
+  priority: string;
   color: string;
-  assignee:string
-  deleteCard:()=>void
-  editCard:()=>void
+  assignee: string;
+  deleteCard: () => void;
+  editCard: () => void;
 }
 
-export 
-interface ProjectCardProps {
+export interface ProjectCardProps {
   name: string;
-  priority: string; 
+  priority: string;
   color: string;
-  assignee:string
-  deleteCard:()=>void
-  editCard:()=>void
+  assignee: string;
+  deleteCard: () => void;
+  editCard: () => void;
 }

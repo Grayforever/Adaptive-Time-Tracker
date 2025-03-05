@@ -11,7 +11,7 @@ export const View = () => {
       <Route path="/" element={<SignIn />} />
 
       <Route path="/dashboard" element={<AppLayout />}>
-        <Route index element={<Dashboard />} /> 
+        <Route index element={<Dashboard />} />
         <Route path="admin" element={<Admin />} />
         <Route path="allProjects" element={<Timetracker />} />
       </Route>
