@@ -22,6 +22,11 @@ const items =[
     url: "/bisom",
     icon: BiSolidTachometer,
   },
+  {
+    title: "Time Tracker",
+    url: "/time-tracker",
+    icon: BiSolidTachometer,
+  },
   
 ]
 const AppSideBar = () => {
