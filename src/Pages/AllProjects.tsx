@@ -7,11 +7,11 @@ import AddProject from "@/components/ProjectComponents/Modals/addProject";
 import ConfirmModal from "@/components/ProjectComponents/Modals/ConfirmDeleteModal";
 import EditProjectModal from "@/components/ProjectComponents/Modals/EditProjectModal";
 import { Project } from "@/types";
-
+import { theme } from "../../theme";
 const priorityColors: { [key in "Normal" | "Urgent" | "High"]: string } = {
-  Normal: "blue",
-  Urgent: "red",
-  High: "orange",
+  Normal: theme.colors.primary[8],
+  Urgent: theme.colors.danger[9],
+  High: theme.colors.secondary[5],
 };
 
 function AllProjects() {

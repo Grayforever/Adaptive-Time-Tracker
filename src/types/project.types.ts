@@ -43,3 +43,5 @@ export interface ProjectCardProps {
   deleteCard: () => void;
   editCard: () => void;
 }
+
+export type Priority = "Normal" | "Urgent" | "High";
