@@ -22,7 +22,9 @@ const items = [
     url: "/dashboard/allProjects",
     icon: FileStack,
   },
+
 ];
+
 const AppSideBar = () => {
   return (
     <Sidebar>

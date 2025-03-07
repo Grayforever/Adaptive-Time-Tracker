@@ -3,11 +3,14 @@ import Admin from "@/Pages/Admin";
 import Dashboard from "@/Pages/Dashboard";
 import AllProjects from "@/Pages/AllProjects";
 import SignIn from "@/Pages/SignIn";
+
 import AppLayout from "./AppLayout";
+
 
 export const View = () => {
   return (
     <Routes>
+
       <Route path="/" element={<SignIn />} />
 
       <Route path="/dashboard" element={<AppLayout />}>
@@ -15,6 +18,7 @@ export const View = () => {
         <Route path="admin" element={<Admin />} />
         <Route path="allProjects" element={<AllProjects />} />
       </Route>
+
     </Routes>
   );
 };
