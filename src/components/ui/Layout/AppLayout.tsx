@@ -7,7 +7,7 @@ const AppLayout = () => {
   return (
     <SidebarProvider defaultOpen={true} className="border-none">
       <AppSideBar />
-      <main className="w-full bg-gray-200">
+      <main className="w-full bg-gray-100">
         <NavBar/>
         <Outlet />
       </main>
