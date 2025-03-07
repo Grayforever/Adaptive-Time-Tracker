@@ -3,7 +3,7 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 // Function to create an Axios instance
 const createAxiosInstance = (
   baseURL: string,
-  headers: Record<string, string>
+  headers: Record<string, string>,
 ): AxiosInstance => {
   return axios.create({
     baseURL,
@@ -22,7 +22,7 @@ const setupInterceptors = (instance: AxiosInstance) => {
       }
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 };
 
