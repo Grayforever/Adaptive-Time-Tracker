@@ -34,7 +34,7 @@ export function LoginForm({
                 <img
                   src="/adaptive.png"
                   alt="Image"
-                  className="inset-0 h-9 object-contain mb-8 dark:brightness-[0.2] dark:grayscale"
+                  className="inset-0 h-9 object-contain mb-8"
                 />
                 <h1 className="text-2xl font-bold">Welcome back 👋</h1>
               </div>
@@ -87,7 +87,7 @@ export function LoginForm({
             <img
               src="/Timemanagement.png"
               alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
         </CardContent>
