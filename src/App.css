@@ -1,3 +1,10 @@
+@import "tailwindcss";
+
+
 #root {
   margin: 0 auto;
+}
+
+.profileName{
+  @apply bg-pink-700
 }
