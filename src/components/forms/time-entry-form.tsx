@@ -6,36 +6,92 @@ import { z } from "zod"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { TimeEntryFormSchema } from "@/schema/time-entry-form"
+import { TimeEntry, TimeEntryFormSchema } from "@/schema/time-entry-form"
+import { Button } from "../ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { useState, useEffect } from "react"
 
 const TimeEntryForm = () => {
 
-  const form = useForm<z.infer<typeof TimeEntryFormSchema>>({
+  const form = useForm<TimeEntry>({
     resolver: zodResolver(TimeEntryFormSchema),
     defaultValues: {
       task: "",
-      project: "",
-      billable: "",
-      hours: "",
-      tags: []
+      project: {
+        id: "",
+        name: ""
+      },
+      billable: false,
+      startTime: null,
+      endTime: null,
+      category: [],
+      createdAt: new Date(),
+      date: new Date(),
+      duration: 0,
+      status: 'stopped'
     },
   })
-
-  const onSubmit = () => {
+  const onSubmit = (values: z.infer<typeof TimeEntryFormSchema>) => {
     console.log("submitted", values);
   }
 
+  const [isRunning, setIsRunning] = useState(false)
+  const [time, setTime] = useState(0)
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout
+
+    if (isRunning) {
+      intervalId = setInterval(() => {
+        setTime((prevTime) => prevTime + 1)
+      }, 1000)
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+      }
+    }
+  }, [isRunning])
+
+  const formatTime = (seconds: number): string => {
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds % 3600) / 60)
+    const remainingSeconds = seconds % 60
+
+    return [hours, minutes, remainingSeconds]
+      .map(val => val.toString().padStart(2, '0'))
+      .join(':')
+  }
+
+  const handleTimerToggle = () => {
+    if (!isRunning) {
+      // Starting the timer
+      setIsRunning(true)
+      form.setValue('startTime', new Date())
+    } else {
+      // Stopping and resetting the timer
+      setIsRunning(false)
+      setTime(0) // Reset to 0
+      form.setValue('endTime', new Date())
+    }
+  }
+
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-8">
+    <div className="w-full mx-auto px-4 py-8 bg-[#f2f6f8]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white rounded-lg shadow-sm p-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white shadow-none p-1 border-2">
           <div className="flex items-center gap-4">
             {/* Task Input */}
             <FormField
@@ -44,10 +100,10 @@ const TimeEntryForm = () => {
               render={({ field }) => (
                 <FormItem className="flex-1">
                   <FormControl>
-                    <Input 
-                      placeholder="What are you working on?" 
-                      className="border-0 text-lg focus-visible:ring-0 px-0" 
-                      {...field} 
+                    <Input
+                      placeholder="What are you working on?"
+                      className="border-0 !text-lg focus-visible:ring-0 px-0 h-12 rounded-none shadow-none [&::placeholder]:text-lg"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -60,18 +116,21 @@ const TimeEntryForm = () => {
               control={form.control}
               name="project"
               render={({ field }) => (
-                <FormItem className="w-40">
+                <FormItem className="w-48">
                   <FormControl>
-                    <div className="flex items-center gap-2">
-                      {/* <span className="text-blue-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                      </span> */}
-                      <Input 
-                        placeholder="Project" 
-                        className="border-0 focus-visible:ring-0"
-                        {...field} 
-                      />
-                    </div>
+                    <Select onValueChange={(value) => field.onChange({ id: value, name: value })} defaultValue={field.value.id}>
+                      <SelectTrigger className="border-0 focus:ring-none h-12 rounded-none shadow-none">
+                        <div className="flex items-center gap-2">
+                          <SelectValue placeholder="Project" />
+                        </div>
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="project1">Project 1</SelectItem>
+                        <SelectItem value="project2">Project 2</SelectItem>
+                        <SelectItem value="project3">Project 3</SelectItem>
+                        {/* Add more projects as needed */}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -82,12 +141,15 @@ const TimeEntryForm = () => {
             <FormField
               control={form.control}
               name="billable"
-              render={({ field }) => (
+              render={({ field: { value, onChange } }) => (
                 <FormItem>
                   <FormControl>
-                    <div className="flex items-center">
-                      <span className="text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+                    <div 
+                      className="flex items-center cursor-pointer"
+                      onClick={() => onChange(!value)}
+                    >
+                      <span className={`text-gray-400 ${value ? 'text-blue-500' : ''}`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 18V6" /></svg>
                       </span>
                     </div>
                   </FormControl>
@@ -96,15 +158,19 @@ const TimeEntryForm = () => {
             />
 
             {/* Timer Display */}
-            <div className="text-xl font-medium">00:00:00</div>
+            <div className="text-xl font-medium">{formatTime(time)}</div>
 
             {/* Start Button */}
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors"
+            <Button
+              type="button"
+              onClick={handleTimerToggle}
+              className={`px-6 py-2 transition-colors rounded-none  cursor-pointer ${isRunning
+                  ? 'bg-red-500 hover:bg-red-600 text-white'
+                  : 'bg-blue-500 hover:bg-blue-600 text-white'
+                }`}
             >
-              START
-            </button>
+              {isRunning ? 'STOP' : 'START'}
+            </Button>
           </div>
         </form>
       </Form>
