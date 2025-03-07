@@ -13,8 +13,8 @@ export const View = () => {
 
       <Route path="/" element={<SignIn />} />
 
-      <Route path="/dashboard" element={<AppLayout />}>
-        <Route index element={<Dashboard />} />
+      <Route path="/*" element={<AppLayout />}>
+        <Route index path="dashboard" element={<Dashboard />} />
         <Route path="admin" element={<Admin />} />
         <Route path="allProjects" element={<AllProjects />} />
       </Route>
