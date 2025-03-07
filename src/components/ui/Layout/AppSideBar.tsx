@@ -1,5 +1,5 @@
-import React from 'react'
 import { BiSolidTachometer } from "react-icons/bi";
+import { FileStack } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,34 +9,28 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-}  from '../sidebar';
+} from "../sidebar";
 
-const items =[
+const items = [
   {
     title: "Dashboard",
-    url: "/home",
+    url: "/dashboard",
     icon: BiSolidTachometer,
   },
   {
-    title: "reports",
-    url: "/bisom",
-    icon: BiSolidTachometer,
+    title: "All Projects",
+    url: "/dashboard/allProjects",
+    icon: FileStack,
   },
-  {
-    title: "Time Tracker",
-    url: "/time-tracker",
-    icon: BiSolidTachometer,
-  },
-  
-]
+
+];
+
 const AppSideBar = () => {
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel >
-            Adaptive Time Tracker App
-          </SidebarGroupLabel>
+          <SidebarGroupLabel>Adaptive Time Tracker App</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -54,7 +48,7 @@ const AppSideBar = () => {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
-}
+  );
+};
 
-export default AppSideBar
+export default AppSideBar;

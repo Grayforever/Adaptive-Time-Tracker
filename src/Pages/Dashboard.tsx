@@ -1,12 +1,5 @@
-import AppLayout from "@/components/ui/Layout/AppLayout";
-import NavBar from "@/components/ui/Layout/NavBar";
-
 const Dashboard = () => {
-  return(
-    <AppLayout >
-      <NavBar></NavBar>
-    </AppLayout>
-  );
+  return <>This is the dashboard</>;
 };
 
 export default Dashboard;
