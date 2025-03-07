@@ -1,14 +1,23 @@
-import * as z from "zod";
+import { z } from "zod"
+
+export const ProjectSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+})
 
 export const TimeEntryFormSchema = z.object({
-  date: z.date(),
-  time: z.string(),
-  description: z.string(),
-  project: z.string(),
   task: z.string().min(1, {
-    message: "Please enter a task"
+    message: "Please enter a task description"
   }),
-  hours: z.number(),
-  tags: z.array(z.string()).optional(),
-  billable: z.boolean().optional(),
-});
+  project: ProjectSchema,
+  billable: z.boolean().default(false),
+  startTime: z.date().nullable(),
+  endTime: z.date().nullable(),
+  category: z.array(z.string()).default([]),
+  createdAt: z.date().default(() => new Date()),
+  date: z.date().default(() => new Date()),
+  duration: z.number().min(0).optional(),
+  status: z.enum(['running', 'stopped', 'paused']).default('stopped'),
+})
+
+export type TimeEntry = z.infer<typeof TimeEntryFormSchema>

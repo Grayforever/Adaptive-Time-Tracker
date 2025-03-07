@@ -1,3 +1,4 @@
+
 import { SidebarTrigger } from "../sidebar";
 
 const NavBar = () => {
