@@ -6,6 +6,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -19,7 +20,7 @@ const items = [
   },
   {
     title: "All Projects",
-    url: "/dashboard/allProjects",
+    url: "/allProjects",
     icon: FileStack,
   },
 
@@ -27,7 +28,18 @@ const items = [
 
 const AppSideBar = () => {
   return (
-    <Sidebar>
+    <Sidebar className="border-none" style={{boxShadow:"2px 4px 9px #0000002e"}}>
+      <SidebarHeader>
+      <SidebarMenu>
+      <SidebarMenuItem>
+      <img
+        src="/adaptive.png"
+        alt="Image"
+        className="inset-0 mx-auto h-9 object-contain mt-4 mb-1"
+      />
+      </SidebarMenuItem>
+      </SidebarMenu>
+        </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Adaptive Time Tracker App</SidebarGroupLabel>
@@ -37,7 +49,7 @@ const AppSideBar = () => {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
-                      <item.icon />
+                      <item.icon  style={{height:24,width:24}} className="text-pink-600"/>
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>

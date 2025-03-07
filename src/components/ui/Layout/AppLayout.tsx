@@ -5,9 +5,9 @@ import NavBar from "./NavBar";
 
 const AppLayout = () => {
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={true} className="border-none">
       <AppSideBar />
-      <main className="w-full">
+      <main className="w-full bg-gray-200">
         <NavBar/>
         <Outlet />
       </main>
