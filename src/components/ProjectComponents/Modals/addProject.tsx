@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Priority } from "@/types";
-import { theme } from "../../../../theme";
+import { theme } from "../../../theme";
 
 interface AddProjectProps {
   onClose: () => void;
@@ -29,7 +29,7 @@ interface AddProjectProps {
     id: string,
     name: string,
     priority: Priority,
-    assignee: string,
+    assignee: string
   ) => void;
 }
 
