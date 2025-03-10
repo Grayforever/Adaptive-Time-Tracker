@@ -25,7 +25,7 @@ const items = [
   },
   {
     title: "Time Tracker",
-    url: "/dashboard/time-tracker",
+    url: "/time-tracker",
     icon: Clock4,
   },
 
