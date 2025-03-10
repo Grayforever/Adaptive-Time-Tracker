@@ -1,0 +1,20 @@
+{
+    "name": "ACS Time Tracker",
+    "short_name": "ACS TT",
+    "start_url": ".",
+    "background_color": "#FFEDFA",
+    "theme_color": "#000957",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/adaptivepwa2.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/Timemanagementpwa.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
