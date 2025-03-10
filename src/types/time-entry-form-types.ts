@@ -13,7 +13,6 @@ export const TimeEntryFormSchema = z.object({
   billable: z.boolean().default(false),
   startTime: z.date().nullable(),
   endTime: z.date().nullable(),
-  category: z.array(z.string()).default([]),
   createdAt: z.date().default(() => new Date()),
   date: z.date().default(() => new Date()),
   duration: z.number().min(0).optional(),

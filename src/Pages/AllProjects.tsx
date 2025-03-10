@@ -7,7 +7,7 @@ import AddProject from "@/components/ProjectComponents/Modals/addProject";
 import ConfirmModal from "@/components/ProjectComponents/Modals/ConfirmDeleteModal";
 import EditProjectModal from "@/components/ProjectComponents/Modals/EditProjectModal";
 import { Project } from "@/types";
-import { theme } from "../../theme";
+import { theme } from "../theme";
 const priorityColors: { [key in "Normal" | "Urgent" | "High"]: string } = {
   Normal: theme.colors.primary[8],
   Urgent: theme.colors.danger[9],
@@ -31,7 +31,7 @@ function AllProjects() {
     id: string,
     name: string,
     priority: "Normal" | "Urgent" | "High",
-    assignee: string,
+    assignee: string
   ) => {
     const newProject: Project = { id, name, priority, assignee };
     setProjects((prevProjects) => [...prevProjects, newProject]);
@@ -40,7 +40,7 @@ function AllProjects() {
   const filteredProjects = projects.filter(
     (project) =>
       project.name.toLowerCase().includes(search.toLowerCase()) ||
-      project.assignee.toLowerCase().includes(search.toLowerCase()),
+      project.assignee.toLowerCase().includes(search.toLowerCase())
   );
 
   const ondeletCard = (projectToDelete: Project) => {
@@ -51,7 +51,7 @@ function AllProjects() {
   const confirmDelete = () => {
     if (projectToDelete) {
       setProjects((prevProjects) =>
-        prevProjects.filter((project) => project.id !== projectToDelete.id),
+        prevProjects.filter((project) => project.id !== projectToDelete.id)
       );
     }
     setIsDeleteModal(false);
@@ -72,8 +72,8 @@ function AllProjects() {
     if (updatedProject) {
       setProjects((prevProjects) =>
         prevProjects.map((project) =>
-          project.id === updatedProject.id ? updatedProject : project,
-        ),
+          project.id === updatedProject.id ? updatedProject : project
+        )
       );
     }
     setIsEditModalOpen(false);

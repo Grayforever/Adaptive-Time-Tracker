@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { TimeEntry, TimeEntryFormSchema } from "@/schema/time-entry-form"
+import { TimeEntry, TimeEntryFormSchema } from "@/types/time-entry-form-types"
 import { Button } from "../ui/button"
 import {
   Select,
@@ -35,7 +35,6 @@ const TimeEntryForm = () => {
       billable: false,
       startTime: null,
       endTime: null,
-      category: [],
       createdAt: new Date(),
       date: new Date(),
       duration: 0,
@@ -116,10 +115,10 @@ const TimeEntryForm = () => {
               control={form.control}
               name="project"
               render={({ field }) => (
-                <FormItem className="w-48">
+                <FormItem className="w-30">
                   <FormControl>
                     <Select onValueChange={(value) => field.onChange({ id: value, name: value })} defaultValue={field.value.id}>
-                      <SelectTrigger className="border-0 focus:ring-none h-12 rounded-none shadow-none">
+                      <SelectTrigger className="border-0 focus:ring-none h-12 rounded-none shadow-none cursor-pointer">
                         <div className="flex items-center gap-2">
                           <SelectValue placeholder="Project" />
                         </div>
@@ -144,12 +143,12 @@ const TimeEntryForm = () => {
               render={({ field: { value, onChange } }) => (
                 <FormItem>
                   <FormControl>
-                    <div 
+                    <div
                       className="flex items-center cursor-pointer"
                       onClick={() => onChange(!value)}
                     >
                       <span className={`text-gray-400 ${value ? 'text-blue-500' : ''}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 18V6" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-dollar-sign"><line x1="12" x2="12" y1="2" y2="22" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
                       </span>
                     </div>
                   </FormControl>
@@ -165,8 +164,8 @@ const TimeEntryForm = () => {
               type="button"
               onClick={handleTimerToggle}
               className={`px-6 py-2 transition-colors rounded-none  cursor-pointer ${isRunning
-                  ? 'bg-red-500 hover:bg-red-600 text-white'
-                  : 'bg-blue-500 hover:bg-blue-600 text-white'
+                ? 'bg-red-500 hover:bg-red-600 text-white'
+                : 'bg-blue-500 hover:bg-blue-600 text-white'
                 }`}
             >
               {isRunning ? 'STOP' : 'START'}

@@ -1,5 +1,5 @@
 import { BiSolidTachometer } from "react-icons/bi";
-import { FileStack } from "lucide-react";
+import { Clock4, FileStack } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -22,6 +22,11 @@ const items = [
     title: "All Projects",
     url: "/allProjects",
     icon: FileStack,
+  },
+  {
+    title: "Time Tracker",
+    url: "/dashboard/time-tracker",
+    icon: Clock4,
   },
 
 ];
