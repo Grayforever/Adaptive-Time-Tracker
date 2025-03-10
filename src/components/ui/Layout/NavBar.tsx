@@ -2,6 +2,7 @@
 import { Button } from "../button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../dropdown-menu";
 import { SidebarTrigger } from "../sidebar";
+import { theme } from "../../../theme";
 
 const NavBar = () => {
   // const 
@@ -18,7 +19,7 @@ const NavBar = () => {
       <DropdownMenu>
       <DropdownMenuTrigger>
         <span>Welcome 👋</span> &nbsp;&nbsp;
-        <Button key={'profile'} className="profileName">SM</Button>
+        <Button key={'profile'} style={{background:theme.colors.primary[8]}}>SM</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Appearance</DropdownMenuLabel>

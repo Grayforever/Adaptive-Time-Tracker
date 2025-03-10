@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../sidebar";
+import { theme } from "@/theme";
 
 const items = [
   {
@@ -54,7 +55,7 @@ const AppSideBar = () => {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
-                      <item.icon  style={{height:24,width:24}} className="text-pink-600"/>
+                      <item.icon  style={{height:24,width:24,color:theme.colors.primary[8]}}/>
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
