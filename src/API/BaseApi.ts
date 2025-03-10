@@ -3,7 +3,7 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 // Function to create an Axios instance
 const createAxiosInstance = (
   baseURL: string,
-  headers: Record<string, string>,
+  headers: Record<string, string>
 ): AxiosInstance => {
   return axios.create({
     baseURL,
@@ -18,11 +18,11 @@ const setupInterceptors = (instance: AxiosInstance) => {
       const access = import.meta.env.VITE_FAKE_TOKEN;
 
       if (access) {
-        config.headers["Authorization"] = `JWT ${access}`;
+        config.headers["Authorization"] = `Bearer ${access}`;
       }
       return config;
     },
-    (error) => Promise.reject(error),
+    (error) => Promise.reject(error)
   );
 };
 

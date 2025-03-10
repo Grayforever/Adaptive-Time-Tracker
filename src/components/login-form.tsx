@@ -3,13 +3,29 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
+interface Props {
+  handleOnSubmit: () => void;
+  setUsername: (email: string) => void;
+  Username: string;
+  setPassword: (password: string) => void;
+  Password: string
+  onError:boolean
+  onErrorMessage:string
+}
 export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+  setUsername,
+  Username,
+  Password,
+  setPassword,
+  handleOnSubmit,
+  onError,
+  onErrorMessage
+}: Props) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6")}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">
@@ -18,7 +34,7 @@ export function LoginForm({
                 <img
                   src="/adaptive.png"
                   alt="Image"
-                  className="inset-0 h-9 object-contain mb-8 dark:brightness-[0.2] dark:grayscale"
+                  className="inset-0 h-9 object-contain mb-8"
                 />
                 <h1 className="text-2xl font-bold">Welcome back 👋</h1>
               </div>
@@ -27,6 +43,8 @@ export function LoginForm({
                 <Input
                   id="email"
                   type="email"
+                  value={Username}
+                  onChange={(e) => setUsername(e.target?.value)}
                   placeholder="m@example.com"
                   required
                 />
@@ -41,11 +59,21 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" type="password" value={Password} onChange={(e)=>setPassword(e.target.value)} required />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="button" className="w-full" onClick={handleOnSubmit}>
                 Login
               </Button>
+
+              {
+                onError && ( <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>
+                    {onErrorMessage}
+                  </AlertDescription>
+                </Alert>)
+              }
 
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
@@ -59,7 +87,7 @@ export function LoginForm({
             <img
               src="/Timemanagement.png"
               alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
         </CardContent>
