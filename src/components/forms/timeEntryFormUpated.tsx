@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -48,7 +46,7 @@ const TimeEntryForm = () => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
+    let intervalId: ReturnType<typeof setInterval>;
 
     if (isRunning) {
       intervalId = setInterval(() => {
@@ -104,6 +102,7 @@ const TimeEntryForm = () => {
                     <Input
                       placeholder="What are you working on?"
                       className="border-0 !text-lg focus-visible:ring-0 px-0 h-12 rounded-none shadow-none [&::placeholder]:text-lg"
+                      data-testid="task-input"
                       {...field}
                     />
                   </FormControl>
@@ -124,6 +123,7 @@ const TimeEntryForm = () => {
                         field.onChange({ id: value, name: value })
                       }
                       defaultValue={field.value.id}
+                      data-testid="project-select"
                     >
                       <SelectTrigger className="border-0 focus:ring-none h-12 rounded-none shadow-none cursor-pointer">
                         <div className="flex items-center gap-2">
@@ -131,10 +131,14 @@ const TimeEntryForm = () => {
                         </div>
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="project1">Project 1</SelectItem>
+                        <SelectItem
+                          value="project1"
+                          data-testid="project-option-1"
+                        >
+                          Project 1
+                        </SelectItem>
                         <SelectItem value="project2">Project 2</SelectItem>
                         <SelectItem value="project3">Project 3</SelectItem>
-                        {/* Add more projects as needed */}
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -153,11 +157,13 @@ const TimeEntryForm = () => {
                     <div
                       className="flex items-center cursor-pointer"
                       onClick={() => onChange(!value)}
+                      data-testid="billable-toggle"
                     >
                       <span
                         className={`text-gray-400 ${
                           value ? "text-blue-500" : ""
                         }`}
+                        data-testid="billable-icon"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -166,9 +172,9 @@ const TimeEntryForm = () => {
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           className="lucide lucide-dollar-sign"
                         >
                           <line x1="12" x2="12" y1="2" y2="22" />
@@ -182,13 +188,16 @@ const TimeEntryForm = () => {
             />
 
             {/* Timer Display */}
-            <div className="text-xl font-medium">{formatTime(time)}</div>
+            <div className="text-xl font-medium" data-testid="timer-display">
+              {formatTime(time)}
+            </div>
 
             {/* Start Button */}
             <Button
               type="button"
               onClick={handleTimerToggle}
-              className={`px-6 py-2 transition-colors rounded-none  cursor-pointer ${
+              data-testid="timer-button"
+              className={`px-6 py-2 transition-colors rounded-none cursor-pointer ${
                 isRunning
                   ? "bg-red-500 hover:bg-red-600 text-white"
                   : "bg-blue-500 hover:bg-blue-600 text-white"
