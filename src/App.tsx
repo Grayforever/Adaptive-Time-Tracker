@@ -1,17 +1,21 @@
 import "./App.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { View } from "./components/ui/Layout/View";
+import { Provider } from "react-redux";
+import { store } from "./store/storeSetup";
+import { saveState } from "./store/localStorage";
 
 function App() {
-  const queryClient = new QueryClient();
+  store.subscribe(() => {
+    saveState(store.getState().auth.token);
+  });
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <BrowserRouter>
         <View />
       </BrowserRouter>
-    </QueryClientProvider>
+    </Provider>
   );
 }
 
