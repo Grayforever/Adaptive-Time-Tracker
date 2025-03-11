@@ -1,3 +1,4 @@
+import { LocalState } from "@/store/localStorage";
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 // Function to create an Axios instance
@@ -15,7 +16,8 @@ const createAxiosInstance = (
 const setupInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {
-      const access = import.meta.env.VITE_FAKE_TOKEN;
+      const { access } = LocalState() || {};
+      console.log(access);
 
       if (access) {
         config.headers["Authorization"] = `Bearer ${access}`;
