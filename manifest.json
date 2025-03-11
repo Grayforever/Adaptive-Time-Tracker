@@ -1,7 +1,6 @@
 {
     "name": "ACS Time Tracker",
     "short_name": "ACS TT",
-    "start_url": ".",
     "background_color": "#FFEDFA",
     "theme_color": "#000957",
     "display": "standalone",
