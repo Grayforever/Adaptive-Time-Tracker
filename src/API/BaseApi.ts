@@ -27,7 +27,7 @@ const setupInterceptors = (instance: AxiosInstance) => {
 };
 
 // Base URL from environment variables
-const baseURL = import.meta.env.VITE_BASE_URL;
+export const baseURL = import.meta.env.VITE_BASE_URL;
 
 // Common headers
 const commonHeaders = {
