@@ -4,16 +4,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 
 interface Props {
   handleOnSubmit: () => void;
   setUsername: (email: string) => void;
   Username: string;
   setPassword: (password: string) => void;
-  Password: string
-  onError:boolean
-  onErrorMessage:string
+  Password: string;
+  onError: boolean;
+  onErrorMessage: string;
+  loading: boolean;
 }
 export function LoginForm({
   setUsername,
@@ -22,7 +23,8 @@ export function LoginForm({
   setPassword,
   handleOnSubmit,
   onError,
-  onErrorMessage
+  onErrorMessage,
+  loading,
 }: Props) {
   return (
     <div className={cn("flex flex-col gap-6")}>
@@ -59,21 +61,26 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" value={Password} onChange={(e)=>setPassword(e.target.value)} required />
+                <Input
+                  id="password"
+                  type="password"
+                  value={Password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
               </div>
               <Button type="button" className="w-full" onClick={handleOnSubmit}>
+                {loading && <Loader2 className="animate-spin" />}
                 Login
               </Button>
 
-              {
-                onError && ( <Alert variant="destructive">
+              {onError && (
+                <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Error</AlertTitle>
-                  <AlertDescription>
-                    {onErrorMessage}
-                  </AlertDescription>
-                </Alert>)
-              }
+                  <AlertDescription>{onErrorMessage}</AlertDescription>
+                </Alert>
+              )}
 
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}

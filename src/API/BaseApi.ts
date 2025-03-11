@@ -3,7 +3,7 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 // Function to create an Axios instance
 const createAxiosInstance = (
   baseURL: string,
-  headers: Record<string, string>
+  headers: Record<string, string | boolean | number>
 ): AxiosInstance => {
   return axios.create({
     baseURL,
@@ -33,6 +33,7 @@ export const baseURL = import.meta.env.VITE_BASE_URL;
 const commonHeaders = {
   "Content-Type": "application/json",
   "Accept-Language": "en-US,en;q=0.9",
+  "ngrok-skip-browser-warning": true,
 };
 
 // Create Axios instances
