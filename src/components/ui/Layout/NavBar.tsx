@@ -1,17 +1,33 @@
 
+import { Button } from "../button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../dropdown-menu";
 import { SidebarTrigger } from "../sidebar";
+import { theme } from "../../../theme";
 
 const NavBar = () => {
+  // const 
   return (
     <div
-      className="p-4 flex items-center"
-      style={{ boxShadow: "2px 5px 9px #00000017" }}
+      className="p-2 flex items-center bg-white"
+      style={{borderBottom:"2px solid #00000014" }}
     >
       <div className="flex gap-6 items-center w-fit">
         <SidebarTrigger className="h-10 w-10 text-7xl" />
       </div>
 
-      <div className="flex gap-6 ml-auto">logo</div>
+      <div className="flex gap-6 ml-auto">
+      <DropdownMenu>
+      <DropdownMenuTrigger>
+        <span>Welcome 👋</span> &nbsp;&nbsp;
+        <Button key={'profile'} style={{background:theme.colors.primary[8]}}>SM</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Logout</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+      </div>
     </div>
   );
 };

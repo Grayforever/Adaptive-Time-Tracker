@@ -1,10 +1,8 @@
-import TimeEntryForm from "@/components/forms/time-entry-form/timeEntryForm";
-import NavBar from "@/components/ui/Layout/NavBar";
+import TimeEntryForm from "../components/forms/time-entry-form/timeEntryForm";
 
 const TimeTracker = () => {
   return (
     <div>
-      <NavBar></NavBar>
       <TimeEntryForm />
     </div>
   );
