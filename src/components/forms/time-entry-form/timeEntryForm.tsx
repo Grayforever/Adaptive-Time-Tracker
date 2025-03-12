@@ -7,18 +7,19 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { TimeEntry, TimeEntryFormSchema } from "@/types/time-entry-form-types";
-import { Button } from "../ui/button";
+} from "../../ui/form"
+import { Input } from "../../ui/input"
+import { TimeEntry, TimeEntryFormSchema } from "../../../types/timeEntryFormTypes"
+import { Button } from "../../ui/button"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useState, useEffect } from "react";
+} from "../../ui/select"
+import { useState, useEffect } from "react"
+import { projectApi, Project } from "../../../API/ProjectApi"
 
 const TimeEntryForm = () => {
   const form = useForm<TimeEntry>({
@@ -42,11 +43,33 @@ const TimeEntryForm = () => {
     console.log("submitted", values);
   };
 
-  const [isRunning, setIsRunning] = useState(false);
-  const [time, setTime] = useState(0);
+  //fetch projects
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let intervalId: ReturnType<typeof setInterval>;
+    const fetchProjects = async () => {
+      setIsLoading(true);
+      try {
+        const data = await projectApi.getAll();
+        setProjects(data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load projects');
+        console.error('Error fetching projects', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  const [isRunning, setIsRunning] = useState(false)
+  const [time, setTime] = useState(0)
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
 
     if (isRunning) {
       intervalId = setInterval(() => {
@@ -102,7 +125,6 @@ const TimeEntryForm = () => {
                     <Input
                       placeholder="What are you working on?"
                       className="border-0 !text-lg focus-visible:ring-0 px-0 h-12 rounded-none shadow-none [&::placeholder]:text-lg"
-                      data-testid="task-input"
                       {...field}
                     />
                   </FormControl>
@@ -118,27 +140,23 @@ const TimeEntryForm = () => {
               render={({ field }) => (
                 <FormItem className="w-30">
                   <FormControl>
-                    <Select
-                      onValueChange={(value) =>
-                        field.onChange({ id: value, name: value })
-                      }
-                      defaultValue={field.value.id}
-                      data-testid="project-select"
-                    >
+                    <Select onValueChange={(value) => {
+                      const selectedProject = projects.find(p => p.id === value);
+                      field.onChange({ id: value, name: selectedProject?.name || '' });
+                    }} defaultValue={field.value.id}>
                       <SelectTrigger className="border-0 focus:ring-none h-12 rounded-none shadow-none cursor-pointer">
                         <div className="flex items-center gap-2">
-                          <SelectValue placeholder="Project" />
+                          <SelectValue placeholder={isLoading ? "Loading..." : "Select Project"} />
                         </div>
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem
-                          value="project1"
-                          data-testid="project-option-1"
-                        >
-                          Project 1
-                        </SelectItem>
-                        <SelectItem value="project2">Project 2</SelectItem>
-                        <SelectItem value="project3">Project 3</SelectItem>
+                        {error ? (
+                          <SelectItem value="error" disabled>Error loading projects</SelectItem>
+                        ) : (
+                          projects.map((project) => (
+                            <SelectItem key={project.id} value={project.id}>{project.name}</SelectItem>
+                          ))
+                        )}
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -157,29 +175,9 @@ const TimeEntryForm = () => {
                     <div
                       className="flex items-center cursor-pointer"
                       onClick={() => onChange(!value)}
-                      data-testid="billable-toggle"
                     >
-                      <span
-                        className={`text-gray-400 ${
-                          value ? "text-blue-500" : ""
-                        }`}
-                        data-testid="billable-icon"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-dollar-sign"
-                        >
-                          <line x1="12" x2="12" y1="2" y2="22" />
-                          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
+                      <span className={`text-gray-400 ${value ? 'text-blue-500' : ''}`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-dollar-sign"><line x1="12" x2="12" y1="2" y2="22" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
                       </span>
                     </div>
                   </FormControl>
@@ -188,16 +186,13 @@ const TimeEntryForm = () => {
             />
 
             {/* Timer Display */}
-            <div className="text-xl font-medium" data-testid="timer-display">
-              {formatTime(time)}
-            </div>
+            <div className="text-xl font-medium">{formatTime(time)}</div>
 
             {/* Start Button */}
             <Button
               type="button"
               onClick={handleTimerToggle}
-              data-testid="timer-button"
-              className={`px-6 py-2 transition-colors rounded-none cursor-pointer ${
+              className={`px-6 py-2 transition-colors rounded-none  cursor-pointer ${
                 isRunning
                   ? "bg-red-500 hover:bg-red-600 text-white"
                   : "bg-blue-500 hover:bg-blue-600 text-white"
