@@ -1,7 +1,7 @@
 // projectSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Project, ApiError, projectApi } from '../../API/ProjectApi';
-import { AppThunkDispatch } from '../storeSetup'; // Import from your store
+import { AppThunkDispatch } from '../storeSetup';
 
 interface ProjectState {
   projects: Project[];
