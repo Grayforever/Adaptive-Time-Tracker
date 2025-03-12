@@ -19,9 +19,15 @@ import {
   SelectValue,
 } from "../../ui/select"
 import { useState, useEffect } from "react"
-import { projectApi, Project } from "../../../API/ProjectApi"
+import { useAppDispatch, useAppSelector } from "@/store/storeSetup";
+import { fetchProjects } from "@/store/slices/projectSlice";
 
 const TimeEntryForm = () => {
+  const dispatch = useAppDispatch();
+  const projects = useAppSelector((state) => state.projects.projects);
+  const isLoading = useAppSelector((state) => state.projects.loading);
+  const error = useAppSelector((state) => state.projects.error);
+
   const form = useForm<TimeEntry>({
     resolver: zodResolver(TimeEntryFormSchema),
     defaultValues: {
@@ -39,31 +45,14 @@ const TimeEntryForm = () => {
       status: "stopped",
     },
   });
+
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
+
   const onSubmit = (values: z.infer<typeof TimeEntryFormSchema>) => {
     console.log("submitted", values);
   };
-
-  //fetch projects
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setIsLoading(true);
-      try {
-        const data = await projectApi.getAll();
-        setProjects(data);
-        setError(null);
-      } catch (err) {
-        setError('Failed to load projects');
-        console.error('Error fetching projects', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchProjects();
-  }, []);
 
   const [isRunning, setIsRunning] = useState(false)
   const [time, setTime] = useState(0)
@@ -152,6 +141,10 @@ const TimeEntryForm = () => {
                       <SelectContent>
                         {error ? (
                           <SelectItem value="error" disabled>Error loading projects</SelectItem>
+                        ) : isLoading ? (
+                          <SelectItem value="loading" disabled>Loading Projects...</SelectItem>
+                        ) : projects.length === 0 ? (
+                          <SelectItem value="no-projects" disabled>No projects available</SelectItem>
                         ) : (
                           projects.map((project) => (
                             <SelectItem key={project.id} value={project.id}>{project.name}</SelectItem>

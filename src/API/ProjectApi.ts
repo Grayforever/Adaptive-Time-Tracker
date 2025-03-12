@@ -1,6 +1,5 @@
 import base from './BaseApi';
-
-const AUTH_TOKEN = '1|ixoaT1izAzT6RJXHyv7utx7mhFPz44F5Pw8qVaIy8c84c284';
+import { API_ENDPOINTS } from './EndPoints';
 
 export interface Project {
   id: string;
@@ -9,58 +8,39 @@ export interface Project {
   priority: "Normal" | "Urgent" | "High";
 }
 
-base.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${AUTH_TOKEN}`;
-  return config;
-});
-
 export const projectApi = {
   async getAll(): Promise<Project[]> {
     try {
-      const response = await base.get('/user-projects/', {
-        headers: {
-          Authorization: `Bearer ${AUTH_TOKEN}`,
-          "ngrok-skip-browser-warning":true
-        },
+      const response = await base.get(API_ENDPOINTS.ALL_PROJECTS, {
         params: {
           userid: '1'
         }
       });
-      
-      console.log('Raw API response:', response);
-      console.log('Response data:', response.data);
-      console.log('Response data type:', typeof response.data);
-      
-      // If response.data is already an array, return it
+
       if (Array.isArray(response.data)) {
         return response.data;
       }
-      
-      // If response.data has a data property that's an array
+
       if (response.data?.data && Array.isArray(response.data.data)) {
         return response.data.data;
       }
-      
-      // If response.data is an object, convert to array
+
       if (typeof response.data === 'object' && response.data !== null) {
         const projectArray = Object.values(response.data) as Project[];
         console.log('Converted project array:', projectArray);
         return projectArray;
       }
-      
+
       console.error('Could not process response:', response.data);
       return [];
     } catch (error) {
       console.error('API call error:', error);
-      return [];
+      throw error;
     }
   },
 
   async getById(id: string): Promise<Project> {
-    const { data } = await base.get(`/user-projects/${id}/`, {
-      headers: {
-        Authorization: `Bearer ${AUTH_TOKEN}`
-      },
+    const { data } = await base.get(`${API_ENDPOINTS.SINGLE_PROJECT}/${id}`, {
       params: {
         userid: '1'
       }
@@ -72,31 +52,20 @@ export const projectApi = {
     const { data } = await base.post('/user-projects/', {
       ...project,
       userid: '1'
-    }, {
-      headers: {
-        Authorization: `Bearer ${AUTH_TOKEN}`
-      }
     });
     return data;
   },
 
   async update(id: string, project: Partial<Project>): Promise<Project> {
-    const { data } = await base.put(`/user-projects/${id}/`, {
+    const { data } = await base.post(`/user-projects/${id}/`, {
       ...project,
       userid: '1'
-    }, {
-      headers: {
-        Authorization: `Bearer ${AUTH_TOKEN}`
-      }
     });
     return data;
   },
 
   async delete(id: string): Promise<void> {
     await base.delete(`/user-projects/${id}/`, {
-      headers: {
-        Authorization: `Bearer ${AUTH_TOKEN}`
-      },
       params: {
         userid: '1'
       }
