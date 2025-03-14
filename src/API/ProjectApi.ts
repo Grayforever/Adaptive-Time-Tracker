@@ -2,7 +2,7 @@ import base from './BaseApi';
 import { API_ENDPOINTS } from './EndPoints';
 
 export interface Project {
-  id: string;
+  id: number;
   name: string;
   assignee: string;
   priority: "Normal" | "Urgent" | "High";
@@ -39,7 +39,7 @@ export const projectApi = {
     }
   },
 
-  async getById(id: string): Promise<Project> {
+  async getById(id: number): Promise<Project> {
     const { data } = await base.get(`${API_ENDPOINTS.SINGLE_PROJECT}/${id}`, {
       params: {
         userid: '1'
@@ -56,7 +56,7 @@ export const projectApi = {
     return data;
   },
 
-  async update(id: string, project: Partial<Project>): Promise<Project> {
+  async update(id: number, project: Partial<Project>): Promise<Project> {
     const { data } = await base.post(`/user-projects/${id}/`, {
       ...project,
       userid: '1'
@@ -64,7 +64,7 @@ export const projectApi = {
     return data;
   },
 
-  async delete(id: string): Promise<void> {
+  async delete(id: number): Promise<void> {
     await base.delete(`/user-projects/${id}/`, {
       params: {
         userid: '1'
