@@ -1,9 +1,9 @@
-import TimeEntryForm from "@/components/forms/time-entry-form";
+import TaskEntryForm from "../components/forms/time-entry-form/taskEntryForm";
 
 const TimeTracker = () => {
   return (
     <div>
-      <TimeEntryForm />
+      <TaskEntryForm />
     </div>
   );
 };
