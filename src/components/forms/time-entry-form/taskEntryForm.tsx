@@ -126,7 +126,7 @@ const TaskEntryForm = () => {
 
       try {
         console.log("here");
-        
+
         await dispatch(submitTaskEntry(taskData));
         setTime(0);
         form.reset({
@@ -140,7 +140,7 @@ const TaskEntryForm = () => {
           workgroupid: 1,
         });
         console.log(form.getValues());
-        
+
       } catch (error) {
         console.error("Failed to submit task entry", error);
       }
@@ -273,15 +273,27 @@ const TaskEntryForm = () => {
                     {isAutomatic ? (
                       <div className="text-xl font-medium">{formatTime(time)}</div>
                     ) : (
-                      <div className="flex font-bold text-[#474D66] border px-2 py-2 rounded-lg w-[4.2rem] justify-center items-center">
-                        <div>h</div>
-                        <span>:</span>
-                        <div >m</div>
-                        <span>:</span>
-                        <div >
-                          s
+                      <div>
+                        <div className="flex font-bold text-[#474D66] border px-2 py-2 rounded-lg w-[4.2rem] justify-center items-center">
+                          <div>h</div>
+                          <span>:</span>
+                          <div >m</div>
+                          <span>:</span>
+                          <div >
+                            s
+                          </div>
+                        </div>
+                        <div className="flex font-bold text-[#474D66] border px-2 py-2 rounded-lg w-[4.2rem] justify-center items-center">
+                          <div>h</div>
+                          <span>:</span>
+                          <div >m</div>
+                          <span>:</span>
+                          <div >
+                            s
+                          </div>
                         </div>
                       </div>
+
                     )}
 
                   </FormControl>
