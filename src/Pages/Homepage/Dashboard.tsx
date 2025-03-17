@@ -1,4 +1,6 @@
 import { getAllProjects } from "@/API/Projects/ProjectAPis";
+import { useSockets } from "@/API/Websockets/WebSocketsInterface";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import DoughnutChat from "@/components/ui/Layout/DoughnutChart";
 import LineGraphChart from "@/components/ui/Layout/LineChart";
 import { ProjectTableProps } from "@/types";
@@ -21,6 +23,17 @@ const Dashboard = () => {
   useEffect(() => {
     GroupProjectByStatusToChart();
   }, [projectList]);
+
+    const [message, setMessage] = useState("");
+    const [isOpened, setisOpened] = useState(false);
+  
+    const value = useSockets()
+    useEffect(()=>{
+      if(value?.message){
+        setisOpened(true)
+        setMessage(value?.message)
+      }
+    },[value])
 
   const GroupProjectByStatusToChart = () => {
     setchartdata(() => {
@@ -124,6 +137,22 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+              {/* Adding the Websockets Prompt */}
+              <AlertDialog open={isOpened} onOpenChange={setisOpened}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Have You Heard👂?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {message}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
