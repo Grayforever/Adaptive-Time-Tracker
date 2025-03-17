@@ -8,7 +8,7 @@ import {
   } from "@/components/ui/chart"
 
   interface chartdetails{
-    data:[]
+    data
     datavalue:string
     datakeystring:string
     sumtotal:number
