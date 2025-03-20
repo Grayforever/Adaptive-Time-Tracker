@@ -1,3 +1,4 @@
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import DoughnutChat from "@/components/ui/Layout/DoughnutChart";
 import LineGraphChart from "@/components/ui/Layout/LineChart";
 
@@ -46,6 +47,22 @@ const Dashboard = () => {
               </ul>
             </div>
         </div>
+
+        {/* Adding the Websockets Prompt */}
+        <AlertDialog open={isOpened} onOpenChange={setisOpened}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Have You Heard👂?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {message}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       </div>
       );
 };
