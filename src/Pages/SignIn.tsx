@@ -1,10 +1,11 @@
 import base from "@/API/BaseApi";
 import { API_ENDPOINTS } from "@/API/EndPoints";
 import { LoginForm } from "@/components/login-form";
+import { getCookie } from "@/store/localStorage";
 import { setToken } from "@/store/slices/auth/tokenSlice";
 import { useAppDispatch } from "@/store/storeSetup";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import React from 'react'
 
@@ -60,6 +61,13 @@ const SignIn = () => {
       setLoading(false);
     }
   };
+  // sign user in if they have cookies already
+  useEffect(() => {
+    const cookies = getCookie("state");
+    if (cookies) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
