@@ -115,8 +115,6 @@ const Dashboard = () => {
                   <p className="text-left text-gray-500">
                   <span><small>{item.status}</small></span> &nbsp;
                     <span><small>Time: {item.duration}</small></span> &nbsp;
-                    {/* <span><small>{item.public?'Public':"Private"}</small></span>&nbsp; */}
-                    {/* <span><small>{item.status}</small></span> */}
                     </p>
                </div>
               )
