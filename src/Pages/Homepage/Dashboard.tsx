@@ -37,25 +37,11 @@ const Dashboard = () => {
 
   const GroupProjectByStatusToChart = () => {
     setchartdata(() => {
-      const newList = projectList.reduce(
-        (prev: { status: string; value: number,fill:string }[], curr) => {
-          const existingItem = prev.find((item) => item.status === curr.status);
-
-          if (existingItem) {
-            existingItem.value += 1;
-          } else {
-            prev.push({
-              status: curr.status,
-              value: 1,
-              fill:  curr.status=="Active"?"#42cd51":"#f53a3a"
-            });
-          }
-          return prev;
-        },
-        []
-      );
-      return newList;
-    });
+      const newlist:{ status: string; value: number }[] = projectList.map(item=>{
+        return {status:item?.name,value:parseInt(String(item?.project_hours)),prefix:'Hours'}
+      })
+      return newlist
+      ;})
 
     //set line Graph
     setbarChart(()=>{
@@ -106,7 +92,7 @@ const Dashboard = () => {
       <div className="bg-white flex flex-wrap w-full px-[2vw] py-[3vw] my-4 rounded-3xl">
         <div className="w-full md:w-1/2 text-center">
           <h3 className="text-1xl md:text-2xl text-gray-500">
-            Project By Status
+            Project By Duration
           </h3>
           <DoughnutChat
             data={chartdata}
@@ -124,7 +110,7 @@ const Dashboard = () => {
           {
             projectList.map((item)=>{
               return (
-               <div className="relative w-[40%] px-[1vw] py-[1vh] mx-[1vw] my-[1vh] rounded-2xl" key={item.id} style={{boxShadow:"1px 3px 17px #00000017"}}>
+               <div className="relative w-full min-w-[200px] md:w-[40%] px-[1vw] py-[1vh] mx-[1vw] my-[1vh] rounded-2xl" key={item.id} style={{boxShadow:"1px 3px 17px #00000017"}}>
                  <p className="text-1xl text-left" style={{color:item.color}}><strong>{item.name}</strong></p>
                   <p className="text-left text-gray-500">
                   <span><small>{item.status}</small></span> &nbsp;

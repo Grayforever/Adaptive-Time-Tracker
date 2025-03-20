@@ -46,6 +46,7 @@ export interface ProjectTableProps {
   public:boolean
   status:string
   updated_at:Date
+  project_hours?:string
 }
 
 export interface ProjectCardProps {
