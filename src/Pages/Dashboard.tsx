@@ -1,6 +1,7 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import DoughnutChat from "@/components/ui/Layout/DoughnutChart";
 import LineGraphChart from "@/components/ui/Layout/LineChart";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const barChart = [
@@ -23,6 +24,17 @@ const Dashboard = () => {
       fill: "#ed3f40"
     },
   ]
+
+  const [message, setMessage] = useState("");
+  const [isOpened, setisOpened] = useState(false);
+
+  const value = useSockets()
+  useEffect(()=>{
+    if(value?.message){
+      setisOpened(true)
+      setMessage(value?.message)
+    }
+  },[value])
 
   return (
       <div className="p-5">
