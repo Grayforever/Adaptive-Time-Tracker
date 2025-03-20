@@ -117,12 +117,15 @@ const Dashboard = () => {
           />
         </div>
         <div className="w-full md:w-1/2 text-center">
+        <h3 className="text-1xl md:text-2xl text-gray-500">
+            Projects ({projectList.length})
+          </h3>
           <div className="flex flex-wrap max-h-[296px] overflow-y-auto">
           {
             projectList.map((item)=>{
               return (
-               <div className="relative mx-[3vw] my-[2vh]" key={item.id}>
-                 <p className="text-2xl text-left" style={{color:item.color}}><strong>{item.name}</strong></p>
+               <div className="relative w-[40%] px-[1vw] py-[1vh] mx-[1vw] my-[1vh] rounded-2xl" key={item.id} style={{boxShadow:"1px 3px 17px #00000017"}}>
+                 <p className="text-1xl text-left" style={{color:item.color}}><strong>{item.name}</strong></p>
                   <p className="text-left text-gray-500">
                   <span><small>{item.status}</small></span> &nbsp;
                     <span><small>Time: {item.duration}</small></span> &nbsp;
