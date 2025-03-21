@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Task, ApiError, taskEntryApi } from '../../API/TaskEntryFormApi';
+import { Task, ApiError, taskApi } from '../../API/TaskApi';
 import { AppThunkDispatch } from '../storeSetup';
 
 interface TaskState {
@@ -41,7 +41,7 @@ export const {
 export const submitTaskEntry = (taskEntry: Task) => async (dispatch: AppThunkDispatch) => {
     dispatch(submitTaskEntryStart());
     try {
-        const response = await taskEntryApi.submitTaskEntry(taskEntry);
+        const response = await taskApi.submitTaskEntry(taskEntry);
         dispatch(submitTaskEntrySuccess());
         return response;
     } catch (error) {

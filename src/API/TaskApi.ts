@@ -19,7 +19,7 @@ export interface ApiErrorResponse {
   [key: string]: unknown;
 }
 
-export const taskEntryApi = {
+export const taskApi = {
   //submit task
   async submitTaskEntry(taskEntry: Task): Promise<Task> {
     const { data } = await base.post(API_ENDPOINTS.CREATE_TASK, {

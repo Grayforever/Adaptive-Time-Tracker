@@ -1,41 +1,41 @@
-"use client"
+"use client";
 
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table";
+import { Task } from "@/API/TaskApi";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type ClockedHours = {
-//   id: string
-//   task: string
-//   project: string
-//   billable: boolean
-//   startTime: string
-//   endTime: string
-//   timeSpent: string
-  id: string
-  name: string
-  emaiL: string
-  image: string
-  lastSeen: string
-}
+    id: number
+    description: string
+    projectid: string
+    workgroupid: number
+    billable: boolean
+    startTime: string
+    endTime: string
+    taskDate: string
+};
 
-export const columns: ColumnDef<ClockedHours>[] = [
+export const columns: ColumnDef<Task>[] = [
   {
-    accessorKey: "task"
+    accessorKey: "description",
   },
   {
-    accessorKey: "project"
+    accessorKey: "projectid",
   },
   {
-    accessorKey: "billable"
+    accessorKey: "workgroupid",
   },
   {
-    accessorKey: "startTime"
+    accessorKey: "billable",
   },
   {
-    accessorKey: "endTime"
+    accessorKey: "startTime",
   },
   {
-    accessorKey: "timeSpent"
+    accessorKey: "endTime",
   },
-]
+  {
+    accessorKey: "taskDate",
+  },
+];

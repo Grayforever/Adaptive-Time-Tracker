@@ -13,7 +13,7 @@ export const projectApi = {
     try {
       const response = await base.get(API_ENDPOINTS.ALL_PROJECTS, {
         params: {
-          userid: '1'
+          userid: '2'
         }
       });
 

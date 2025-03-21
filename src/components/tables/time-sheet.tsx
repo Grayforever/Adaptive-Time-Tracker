@@ -1,22 +1,34 @@
-import { ClockedHours, columns } from "./column"
-import DataTable from "./data-table"
+// import { useEffect, useState } from "react";
+// import { ClockedHours, columns } from "./column";
+// import DataTable from "./data-table";
+// import { fetchProjects } from "@/store/slices/projectSlice";
+// import { TaskEntry } from "@/types/taskEntryFormTypes";
+// import { useAppDispatch, useAppSelector } from "@/store/storeSetup";
 
-async function getClockedHours(): Promise<ClockedHours[]> {
-    const res = await fetch(
-      'https://64a6f5fc096b3f0fcc80e3fa.mockapi.io/api/users'
-    )
-    const data = await res.json()
-    return data
-  }
+// const TaskSheet = () => {
+//   const dispatch = useAppDispatch();
+//   const projects = useAppSelector((state) => state.projects.projects);
+//   const isLoading = useAppSelector((state) => state.projects.loading);
+//   const error = useAppSelector((state) => state.projects.error);
 
-const TimeSheet = async () => {
-  const data = await getClockedHours()
+//   useEffect(() => {
+//     dispatch(fetchProjects());
+//   }, [dispatch]);
+//   console.log(projects)
 
-  return (
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
-    </div>
-  )
-}
+//   const renderTasks = (tasks) => {
+//     return tasks.map((task) => {
+//       <tr key={task.id}>
+//         <td>{task.description}</td>
+//       </tr>
+//     })
+//   }
 
-export default TimeSheet
+//   return (
+//     <div className="container mx-auto py-10">
+//       <DataTable columns={columns} data={projects} />
+//     </div>
+//   );
+// };
+
+// export default TaskSheet;
