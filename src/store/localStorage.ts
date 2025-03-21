@@ -33,18 +33,19 @@ export const LocalState = () => {
  */
 export const saveState = (
   state = { access: "", refresh: "" },
-  expirationDays = 7
+  expirationHours = 5
 ) => {
   try {
     const serializedState = encodeURIComponent(JSON.stringify(state));
-
-    // Calculate expiration date
+ 
+    // Calculate expiration date (5 hours from now)
     const expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + expirationDays);
-
+    expirationDate.setTime(
+      expirationDate.getTime() + expirationHours * 60 * 60 * 1000
+    );
+ 
     // Set cookie with path and expiration
     document.cookie = `state=${serializedState}; expires=${expirationDate.toUTCString()}; path=/`;
-    console.log("hi");
   } catch {
     return undefined;
   }
