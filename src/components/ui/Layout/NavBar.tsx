@@ -17,9 +17,13 @@ const NavBar = () => {
   // sign out
 
   const signOut = async () => {
-    await base.post("/logout", {});
     document.cookie = `state=${""}; expires=${""}; path=/`;
-    navigate("/");
+    try {
+      await base.post("/logout", {});
+      navigate("/");
+    } catch (error) {
+      window.location.reload()
+    }
   };
 
   return (
