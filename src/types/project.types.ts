@@ -1,15 +1,20 @@
 export interface Project {
-  id: string;
+  id:string;
   name: string;
-  assignee: string;
-  priority: "Normal" | "Urgent" | "High";
+  duration: string;
+  color: string;
+  created_by: number|string;
+  assignees_User_Ids: number[]|string[];
+  workgroup_ids: number[]|null;
 }
+
 
 export interface ConfirmModalProps {
   isOpen: boolean;
   onConfirm: () => void;
   onCancel: () => void;
   message: string;
+  isLoading:boolean
 }
 
 export interface ConfirmModalProps {
@@ -28,9 +33,8 @@ export interface EditProjectProps {
 
 export interface ProjectCardProps {
   name: string;
-  priority: string;
   color: string;
-  assignee: string;
+  duration:string
   deleteCard: () => void;
   editCard: () => void;
 }
@@ -49,13 +53,20 @@ export interface ProjectTableProps {
   project_hours?:string
 }
 
-export interface ProjectCardProps {
-  name: string;
-  priority: string;
-  color: string;
-  assignee: string;
-  deleteCard: () => void;
-  editCard: () => void;
+
+
+export interface Users {
+  name:string;
+  id:string
+  
+}
+
+export interface addProject{
+  name: string,
+  assignees: string[],
+  duration: string,
+  color:string,
+  created_by:string
 }
 
 export type Priority = "Normal" | "Urgent" | "High";

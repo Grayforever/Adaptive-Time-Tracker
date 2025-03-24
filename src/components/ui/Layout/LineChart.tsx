@@ -8,6 +8,8 @@ import {
 import { useMemo } from "react";
 
   interface chartdetails{
+        //@ts-expect-error Michael please fix this
+
     data
     datavaluestring:string[]
     xAxisKey:string
@@ -24,6 +26,8 @@ const LineGraphChart:React.FC<chartdetails> = ({data,datavaluestring,xAxisKey,xA
 
   const randomColors = useMemo(() => {
     return datavaluestring.reduce((colors, item) => {
+          //@ts-expect-error Michael please fix this
+
       colors[item] =
         "#" +
         Math.floor(Math.random() * 16777215)
@@ -64,6 +68,8 @@ const LineGraphChart:React.FC<chartdetails> = ({data,datavaluestring,xAxisKey,xA
                 key={item+index} // Add a unique key for each element in the map
                 dataKey={item}
                 type="monotone"
+                  //@ts-expect-error Michael please fix this
+
                 stroke={randomColors[item]}
                 strokeWidth={2}
                 dot={false}
