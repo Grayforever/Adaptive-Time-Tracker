@@ -18,3 +18,35 @@ export const saveState = (state = { access: "", refresh: "" }) => {
     return undefined;
   }
 };
+
+
+export const loadUserDetails =()=>{
+  try {
+    const serializedState = localStorage.getItem("user");
+    if(serializedState===null){
+      return undefined;
+    }
+    return JSON.parse(serializedState);
+    
+  } catch  {
+
+    return undefined
+
+    
+  }
+
+}
+
+export const savedUserState =(state={id:"", userName:"", email:""})=>{
+
+  try {
+    const serializedState = localStorage.setItem("user", JSON.stringify(state))
+    return serializedState
+    
+  } catch  {
+
+    return undefined
+    
+  }
+
+}

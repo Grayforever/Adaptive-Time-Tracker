@@ -1,15 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SLICE_BASE_NAME } from "./constants";
+import { loadUserDetails,savedUserState } from "@/store/localStorage";
 
 export interface UserState {
-  firstName: string;
-  lastName: string;
+  userName: string;
+  email:string;
+  id: "";
+
 }
 
-const initialState: UserState = {
-  firstName: "",
-  lastName: "",
+const initialState:  UserState = loadUserDetails()||  {
+  id:0,
+  userName: "",
+  email:"",
+
 };
+
 
 // user slice
 const userSlice = createSlice({
@@ -17,8 +23,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<UserState>) {
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
+      state.userName = action.payload.userName;
+      state.email = action.payload.email
+      state.id = action.payload.id
+      savedUserState(state)
     },
   },
 });

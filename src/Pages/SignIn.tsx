@@ -1,6 +1,7 @@
 import base from "@/API/BaseApi";
 import { API_ENDPOINTS } from "@/API/EndPoints";
 import { LoginForm } from "@/components/login-form";
+import { setUser } from "@/store/slices/auth";
 import { setToken } from "@/store/slices/auth/tokenSlice";
 import { useAppDispatch } from "@/store/storeSetup";
 
@@ -53,6 +54,15 @@ const SignIn = () => {
       dispatch(
         setToken({ access: data?.access_token, refresh: data?.refresh_token })
       );
+  
+
+      dispatch(
+        setUser({
+          email:data.user.email,
+          id:data.user.id,
+          userName:data.user.name,
+        })
+      )
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
