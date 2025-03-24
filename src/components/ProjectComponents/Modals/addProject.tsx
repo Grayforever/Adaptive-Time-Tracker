@@ -1,6 +1,4 @@
-import type React from "react";
-import { useState } from "react";
-
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -12,37 +10,27 @@ import {
 import { Input } from "../../ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "../../ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Priority } from "@/types";
-import { theme } from "../../../theme";
+import SearchField from "@/components/ui/user-search";
+import useProject from "@/hooks/useProject";
+import NativeColorPicker from "@/components/color-picker";
 
 interface AddProjectProps {
   onClose: () => void;
   handleSubmit: (
-    id: string,
     name: string,
-    priority: Priority,
-    assignee: string
+    assignees: string[],
+    duration: string,
+    color:string
   ) => void;
 }
 
 function AddProject({ onClose, handleSubmit }: AddProjectProps) {
   const [name, setName] = useState<string>("");
-  const [priority, setPriority] = useState<Priority | "">("");
-  const [assignee, setAssignee] = useState<string>("");
-
-  const priorityColors = {
-    High: theme.colors.secondary[6],
-    Urgent: theme.colors.danger[6],
-    Normal: theme.colors.primary[6],
-  };
+  const [assignees, setAssignees] = useState<string[]>([]);
+  const [duration, setDuration] = useState<string>("");
+  const [color, setColor] = useState<string>("");
+  const [isPublic, setIsPublic] = useState<boolean>(false); 
+  const { users } = useProject();
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -50,16 +38,17 @@ function AddProject({ onClose, handleSubmit }: AddProjectProps) {
     }
   };
 
-  const generateUniqueId = () => {
-    const timestamp = Date.now();
-    const randomNum = Math.floor(Math.random() * 1000);
-    return `${timestamp}-${randomNum}`;
+  const handleColorChange = (newColor: string) => {
+    setColor(newColor);
   };
 
+  const handleAssigneesChange = React.useCallback((selectedIds: string[]) => {
+    setAssignees(selectedIds);
+  }, []);
+
   const onCreateProject = () => {
-    if (name.trim() && priority && assignee.trim()) {
-      const newId = generateUniqueId();
-      handleSubmit(newId, name, priority, assignee);
+    if (name.trim() && assignees.length > 0 && duration.trim()) {
+      handleSubmit(name, assignees, duration,color); 
       onClose();
     } else {
       alert("Please fill in all fields.");
@@ -78,21 +67,14 @@ function AddProject({ onClose, handleSubmit }: AddProjectProps) {
               <div>
                 <CardTitle>Create project</CardTitle>
                 <CardDescription>
-                  create and assign project here❤️
+                  Create and assign project here ❤️
                 </CardDescription>
               </div>
-              {priority && (
-                <Badge
-                  style={{ backgroundColor: priorityColors[priority] }}
-                  className="text-white"
-                >
-                  {priority}
-                </Badge>
-              )}
             </div>
           </CardHeader>
           <CardContent>
             <div className="grid w-full items-center gap-4">
+              {/* Projectt Name */}
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name">Project Name</Label>
                 <Input
@@ -103,30 +85,52 @@ function AddProject({ onClose, handleSubmit }: AddProjectProps) {
                   required
                 />
               </div>
+
+              {/* Project Duration */}
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="assignee">Project Assignee</Label>
+                <Label htmlFor="duration">Project Duration</Label>
                 <Input
-                  id="assignee"
-                  placeholder="Name of your assignee"
-                  value={assignee}
-                  onChange={(e) => setAssignee(e.target.value)}
-                  required
+                  id="duration"
+                  type="text"
+                  placeholder="e.g., 3 months, 2 weeks, or 6 days"
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                  className="p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 />
               </div>
-              <div className="flex flex-col space-y-5.5">
-                <Label htmlFor="priority">Priority</Label>
-                <Select
-                  onValueChange={(value) => setPriority(value as Priority)}
-                >
-                  <SelectTrigger id="priority">
-                    <SelectValue placeholder="Select priority" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="High">High</SelectItem>
-                    <SelectItem value="Urgent">Urgent</SelectItem>
-                    <SelectItem value="Normal">Normal</SelectItem>
-                  </SelectContent>
-                </Select>
+
+              {/* Project Assignees */}
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="assignees">Project Assignees</Label>
+                <SearchField
+                  items={users}
+                  placeholder="Search for assignees..."
+                  emptyMessage="No users found."
+                  onSelect={handleAssigneesChange} 
+                />
+              </div>
+
+              {/* Project Color */}
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="color">Project Color</Label>
+                <div className="flex items-center">
+                  <NativeColorPicker value={color} onChange={handleColorChange} />
+                </div>
+              </div>
+
+              {/* Public/Private Toggle */}
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="is-public">Make Project Public</Label>
+                <div className="flex items-center space-x-2">
+                  <input
+                    id="is-public"
+                    type="checkbox"
+                    checked={isPublic}
+                    onChange={(e) => setIsPublic(e.target.checked)} 
+                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-700">Public</span>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -136,7 +140,7 @@ function AddProject({ onClose, handleSubmit }: AddProjectProps) {
             </Button>
             <Button
               onClick={onCreateProject}
-              disabled={!name.trim() || !priority || !assignee.trim()}
+              disabled={!name.trim() || assignees.length === 0 || !duration.trim()}
             >
               Create
             </Button>
