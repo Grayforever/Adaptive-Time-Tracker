@@ -12,11 +12,10 @@ import { ProjectCardProps } from "@/types";
 
 const ProjectDisplayCard: React.FC<ProjectCardProps> = ({
   name,
-  priority,
   color,
-  assignee,
   deleteCard,
   editCard,
+  duration
 }) => {
   return (
     <Card className="w-full hover:shadow-md mt-2  transition-shadow">
@@ -26,20 +25,18 @@ const ProjectDisplayCard: React.FC<ProjectCardProps> = ({
             <h3 className="font-medium leading-none">{name}</h3>
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
-                Priority: {priority}
+                {/* Priority: {color} */}
               </span>
               <div
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: color }}
               />
               <span className="text-sm text-muted-foreground flex items-center gap-1">
-                • <Clock className="h-3 w-3" /> 0h
+                • <Clock className="h-3 w-3" />
+                {duration}
               </span>
             </div>
-            <span className="text-sm text-muted-foreground">
-              Assignee:
-              <span className="font-bold text-black ml-1">{assignee}</span>
-            </span>
+           
           </div>
 
           <div className="flex items-center gap-1">
