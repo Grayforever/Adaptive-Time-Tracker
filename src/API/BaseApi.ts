@@ -1,5 +1,10 @@
 import { LocalState } from "@/store/localStorage";
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import { setToken } from "@/store/slices/auth/tokenSlice";
+import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
+
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
 
 // Function to create an Axios instance
 const createAxiosInstance = (
@@ -26,6 +31,42 @@ const setupInterceptors = (instance: AxiosInstance) => {
     },
     (error) => Promise.reject(error)
   );
+
+  instance.interceptors.response.use(
+    (response) => response,
+    async (error: AxiosError) => {
+      const originalRequest = error.config as CustomAxiosRequestConfig;
+
+      if (!originalRequest || !originalRequest.headers) {
+        return Promise.reject(error);
+      }
+
+      if (error.response?.status === 401 && !originalRequest?._retry) {
+          originalRequest._retry = true;
+
+        try {
+          const { refresh } = LocalState() || {};
+          const { store } = await import("@/store/storeSetup");
+          if (!refresh) throw new Error("No refresh token");
+
+          const res = await base.post("/refresh-token", { refresh_token:refresh });
+
+          if (res.status === 200) {
+                store.dispatch(
+                   setToken({ access: res.data?.access_token, refresh: res.data?.refresh_token })
+                 );
+
+            originalRequest.headers["Authorization"] = `Bearer ${res.data.accessToken}`;
+            return instance(originalRequest);
+          }
+        } catch (refreshError) {
+          return Promise.reject(refreshError);
+        }
+      }
+
+      // return Promise.reject(error);
+    }
+  )
 };
 
 // Base URL from environment variables

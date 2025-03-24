@@ -39,6 +39,20 @@ export interface ProjectCardProps {
   editCard: () => void;
 }
 
+export interface ProjectTableProps {
+  color:string
+  created_at:Date
+  created_by:number
+  duration:string
+  favorite:boolean
+  id?:number
+  name:string
+  public:boolean
+  status:string
+  updated_at:Date
+  project_hours?:string
+}
+
 
 
 export interface Users {
