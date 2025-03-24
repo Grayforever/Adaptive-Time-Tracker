@@ -8,6 +8,7 @@ import AppLayout from "./AppLayout";
 import TimeTracker from "@/Pages/TimeTracker";
 import { useEffect } from "react";
 import { useAppSelector } from "@/store/storeSetup";
+import Teams from "@/Pages/Team/Teams";
 
 export const View = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export const View = () => {
         <Route path="admin" element={<Admin />} />
         <Route path="allProjects" element={<AllProjects />} />
         <Route path="time-tracker" element={<TimeTracker />} />
+        <Route path="teams" element={<Teams />} />
       </Route>
     </Routes>
   );
