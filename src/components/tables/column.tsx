@@ -10,10 +10,13 @@ export type ClockedHours = {
     description: string
     projectid: string
     workgroupid: number
-    billable: boolean
-    startTime: string
-    endTime: string
+    billable: number
+    startTimeDate: string
+    endTimeDate: string
     taskDate: string
+    projectName: string
+    created_at: string
+    updated_at: string
 };
 
 export const columns: ColumnDef<Task>[] = [
@@ -21,10 +24,7 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: "description",
   },
   {
-    accessorKey: "projectid",
-  },
-  {
-    accessorKey: "workgroupid",
+    accessorKey: "projectName",
   },
   {
     accessorKey: "billable",

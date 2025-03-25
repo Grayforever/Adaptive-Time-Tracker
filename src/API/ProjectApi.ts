@@ -6,6 +6,21 @@ export interface Project {
   name: string;
   assignee: string;
   priority: "Normal" | "Urgent" | "High";
+  tasks?: Task[]
+}
+
+export interface Task {
+  id: number;
+  description: string;
+  billable: number;
+  created_at: string;
+  created_by: number;
+  endTimeDate: string;
+  projectid: number;
+  startTimeDate: string;
+  updated_at: string;
+  workgroupid: number;
+  project_date: string;
 }
 
 export const projectApi = {

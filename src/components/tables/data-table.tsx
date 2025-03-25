@@ -11,6 +11,8 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
   TableRow,
 } from "@/components/ui/table"
 
@@ -32,7 +34,7 @@ const DataTable = <TData, TValue>({
   return (
     <div className="rounded-md border">
       <Table>
-        {/* <TableHeader>
+        <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
@@ -49,7 +51,7 @@ const DataTable = <TData, TValue>({
               })}
             </TableRow>
           ))}
-        </TableHeader> */}
+        </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
