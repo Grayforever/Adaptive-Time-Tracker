@@ -175,7 +175,7 @@ const TeamsView = () => {
                 </AlertDescription>
               </Alert>):''
             }
-                <AddUpdateTeamMember roleList={roleList} workgroupList={workgroupList} setdata={setteamMember} teamMember={teamMember}/>
+                <AddUpdateTeamMember roleList={roleList} workgroupList={workgroupList} setdata={setteamMember} teamMember={teamMember} isUpdate={false}/>
             <DialogFooter>
             <Button onClick={handlesubmit}>Save changes</Button>
             </DialogFooter>
@@ -255,7 +255,7 @@ const TeamsView = () => {
                                     Follow the procedures below to update an existing Team member.
                                 </DialogDescription>
                                 </DialogHeader>
-                                    <AddUpdateTeamMember roleList={roleList} workgroupList={workgroupList} setdata={setrowData} teamMember={rowData}/>
+                                    <AddUpdateTeamMember roleList={roleList} workgroupList={workgroupList} setdata={setrowData} teamMember={rowData} isUpdate={true}/>
                                 <DialogFooter>
                                 <Button onClick={handleupdate}>Save changes</Button>
                                 </DialogFooter>

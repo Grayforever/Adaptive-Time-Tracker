@@ -10,12 +10,14 @@ interface props {
   workgroupList: workgroups[];
   setdata: (e: userTeams) => void;
   teamMember: userTeams;
+  isUpdate:boolean
 }
 const AddUpdateTeamMember: React.FC<props> = ({
   roleList,
   workgroupList,
   setdata,
   teamMember,
+  isUpdate
 }) => {
   // const [revalidatePass,setrevalidatePass] = useState('')
   return (
@@ -53,39 +55,46 @@ const AddUpdateTeamMember: React.FC<props> = ({
         />
       </div>
 
-      <div className="flex flex-wrap">
-        <div className="px-4 py-1 w-full md:w-1/2">
-          <label className="text-gray-500 ml-2 text-[13px]">
-            Enter user password
-          </label>
-          <Input
-            placeholder="Enter Password"
-            id="passwordInput"
-            className="mt-1 outline-none"
-            value={teamMember?.password}
-            onChange={(e) =>
-              setdata?.({ ...teamMember, password: e.target.value })
-            }
-            type="password"
-          />
-        </div>
+      {
+        !isUpdate?
+        (
+            <div className="flex flex-wrap">
+            <div className="px-4 py-1 w-full md:w-1/2">
+              <label className="text-gray-500 ml-2 text-[13px]">
+                Enter user password
+              </label>
+              <Input
+                placeholder="Enter Password"
+                id="passwordInput"
+                className="mt-1 outline-none"
+                value={teamMember?.password}
+                onChange={(e) =>
+                  setdata?.({ ...teamMember, password: e.target.value })
+                }
+                type="password"
+              />
+            </div>
+    
+            <div className="px-4 py-1 w-full md:w-1/2">
+              <label className="text-gray-500 ml-2 text-[13px]">
+                Re-Enter user password
+              </label>
+              <Input
+                placeholder="Re-Enter Password"
+                id="revalpasswordInput"
+                className="mt-1 outline-none"
+                value={teamMember.revalidatePass}
+                onChange={(e) =>
+                  setdata?.({ ...teamMember, revalidatePass: e.target.value })
+                }
+                type="password"
+              />
+            </div>
+          </div>
+        ):''
+      }
 
-        <div className="px-4 py-1 w-full md:w-1/2">
-          <label className="text-gray-500 ml-2 text-[13px]">
-            Re-Enter user password
-          </label>
-          <Input
-            placeholder="Re-Enter Password"
-            id="revalpasswordInput"
-            className="mt-1 outline-none"
-            value={teamMember.revalidatePass}
-            onChange={(e) =>
-              setdata?.({ ...teamMember, revalidatePass: e.target.value })
-            }
-            type="password"
-          />
-        </div>
-      </div>
+     
 
       <div className="px-4 py-1">
         <label className="text-gray-500 ml-2 text-[13px]">Select Role</label>
