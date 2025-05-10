@@ -1,5 +1,4 @@
-import { BiSolidTachometer } from "react-icons/bi";
-import { Clock4, FileStack } from "lucide-react";
+import { Clock4, FileStack, LayoutDashboard, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -17,7 +16,7 @@ const items = [
   {
     title: "Dashboard",
     url: "/dashboard",
-    icon: BiSolidTachometer,
+    icon: LayoutDashboard,
   },
   {
     title: "All Projects",
@@ -28,6 +27,11 @@ const items = [
     title: "Time Tracker",
     url: "/time-tracker",
     icon: Clock4,
+  },
+  {
+    title: "Teams",
+    url: "/teams",
+    icon: Users,
   },
 
 ];
@@ -52,8 +56,8 @@ const AppSideBar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                <SidebarMenuItem key={item.title} >
+                  <SidebarMenuButton asChild className="!py-[3vh] !px-[1vw] rounded-3xl">
                     <a href={item.url}>
                       <item.icon  style={{height:24,width:24,color:theme.colors.primary[8]}}/>
                       <span>{item.title}</span>
